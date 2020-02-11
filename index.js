@@ -3,7 +3,7 @@ const celeste = document.getElementById('celeste');
 const violeta = document.getElementById('violeta');
 const naranja = document.getElementById('naranja');
 const verde = document.getElementById('verde');
-const ULTIMO_NIVEL = 1;
+const ULTIMO_NIVEL = 5;
 
 class Juego {
     constructor(){
