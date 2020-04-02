@@ -1,11 +1,16 @@
-body {
+* {
     margin: 0;
-    background: #dedede;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .container {
     display: flex;
+    justify-content: center;
     align-items: center;
     height: 100vh;
+    background-image: linear-gradient(to right top, #2bcd40, #71d138, #9cd538, #c0d83f, #e0da4d);
+    flex-direction: column;
   }
-
   .gameboard {
     height: 100vh;
     width: 100vh;
