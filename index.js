@@ -4,10 +4,11 @@ const violeta = document.getElementById('violeta');
 const naranja = document.getElementById('naranja');
 const verde = document.getElementById('verde');
 const btnEmpezar = document.getElementById('btnEmpezar');
-const ULTIMO_NIVEL=2;
+const ULTIMO_NIVEL=10;
 
 class Juego {
     constructor() {
+        this.inicializar = this.inicializar.bind(this);
         this.inicializar();
         this.generarSecuencia();
         setTimeout(() => {
@@ -17,7 +18,7 @@ class Juego {
     inicializar() {
         this.elegirColor = this.elegirColor.bind(this);
         this.siguienteNivel = this.siguienteNivel.bind(this);
-        btnEmpezar.classList.add('hide');
+        this.toggleBtnEmpezar();
         this.nivel = 1;
         this.colores = {
             celeste,
@@ -27,9 +28,18 @@ class Juego {
         }
     }
 
+    toggleBtnEmpezar() {
+        if(btnEmpezar.classList.contains('hide')){
+            btnEmpezar.classList.remove('hide');
+        }
+        else {
+            btnEmpezar.classList.add('hide');
+        }
+    }
+
     generarSecuencia() {
         this.secuencia = new Array(ULTIMO_NIVEL).fill(0).map(n =>  Math.floor(Math.random() * 4)); 
-        console.log(this.secuencia);
+        // console.log(this.secuencia);
     }
 
     siguienteNivel() {
@@ -67,7 +77,7 @@ class Juego {
         for(let i=0; i < this.nivel; i++){
             const color = this.transformarNumeroAColor(this.secuencia[i]);
             setTimeout(() => {
-                console.log(color);
+                // console.log(color);
                 this.iluminarColor(color);    
             }, 1000 * i);
             
@@ -106,9 +116,9 @@ class Juego {
             this.subNivel++;
             if(this.subNivel === this.nivel){
                 this.nivel++;
-                // this.eliminarEventosClick();
+                this.eliminarEventosClick();
                 if(this.nivel === (ULTIMO_NIVEL + 1)){
-                    console.log('Ganooooo');
+                    this.ganoElJuego();
                 }
                 else {
                     setTimeout(() => {
@@ -118,9 +128,23 @@ class Juego {
             }
         }
         else {
-            console.log("perdistes Gay");
-        }
-        
+            this.perdioElJuego();
+        }   
+    }
+
+    ganoElJuego() {
+        swal('Simon Dice','Ganastes!!!','success')
+        .then(() => {
+            this.inicializar();
+        })
+    }
+
+    perdioElJuego() {
+        swal('Simon Dice','OH!! Perdistes!!','error')
+        .then(() => {
+            this.eliminarEventosClick();
+            this.inicializar();
+        })
     }
 }
 
